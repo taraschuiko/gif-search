@@ -11,7 +11,7 @@ export default class Main extends React.Component {
   }
 
   state = {
-    searchText: "pewdiepie",
+    searchText: "",
     results: []
   };
 
@@ -23,32 +23,29 @@ export default class Main extends React.Component {
   }
 
   search() {
-    let searchText = this.state.searchText;
-    fetch(`${API_URL}search?q=${searchText}&api_key=${API_KEY}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json"
-      }
-    })
-      .then(r => r.json())
-      .then(r =>
-        r.data.map(gif => {
-          this.setState(prevState => {
-            let results = prevState.results;
-            results.push(gif.images.downsized_medium.url);
-            return {
-              ...prevState,
-              results
-            };
-          });
-          return gif;
-        })
-      );
-  }
-
-  componentDidMount() {
-    this.search();
+    if (this.state.searchText.length > 0) {
+      fetch(`${API_URL}search?q=${this.state.searchText}&api_key=${API_KEY}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        }
+      })
+        .then(r => r.json())
+        .then(r =>
+          r.data.map(gif => {
+            this.setState(prevState => {
+              let results = prevState.results;
+              results.push(gif.images.downsized_medium.url);
+              return {
+                ...prevState,
+                results
+              };
+            });
+            return gif;
+          })
+        );
+    }
   }
 
   render() {

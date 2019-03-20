@@ -3,15 +3,10 @@ import Masonry from "react-masonry-component";
 
 export default function(props) {
   return (
-    <Masonry updateOnEachImageLoad={true} options={{ gutter: 15 }}>
+    <Masonry updateOnEachImageLoad={true} options={{}}>
       {props.results.map((result, index) => (
-        <div className="grid-item">
-          <img
-            src={result}
-            key={index}
-            className="result-image"
-            alt={props.searchText}
-          />
+        <div className="grid-item" key={index}>
+          <img src={result} className="result-image" alt={props.searchText} />
         </div>
       ))}
     </Masonry>
