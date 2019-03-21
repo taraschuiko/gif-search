@@ -32,8 +32,12 @@ export default class Main extends React.Component {
         }
       })
         .then(r => r.json())
-        .then(r =>
-          r.data.map(gif => {
+        .then(r => {
+          this.setState(prevState => ({
+            ...prevState,
+            results: []
+          }));
+          return r.data.map(gif => {
             this.setState(prevState => {
               let results = prevState.results;
               results.push(gif.images.downsized_medium.url);
@@ -43,8 +47,8 @@ export default class Main extends React.Component {
               };
             });
             return gif;
-          })
-        );
+          });
+        });
     }
   }
 
