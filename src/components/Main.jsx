@@ -33,21 +33,12 @@ export default class Main extends React.Component {
       })
         .then(r => r.json())
         .then(r => {
+          let results = [];
+          r.data.map(gif => results.push(gif.images.downsized_medium.url));
           this.setState(prevState => ({
             ...prevState,
-            results: []
+            results
           }));
-          return r.data.map(gif => {
-            this.setState(prevState => {
-              let results = prevState.results;
-              results.push(gif.images.downsized_medium.url);
-              return {
-                ...prevState,
-                results
-              };
-            });
-            return gif;
-          });
         });
     }
   }
